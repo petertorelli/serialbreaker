@@ -1,0 +1,5 @@
+mbed-os
+BUILD
+.DS_Store
+.mbed
+__pycache__

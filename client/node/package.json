@@ -1,0 +1,16 @@
+{
+  "name": "serialbreaker-node",
+  "version": "1.0.0",
+  "description": "Try to break a serial port with NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ini": "^2.0.0",
+    "seedrandom": "^3.0.5",
+    "serialport": "^9.1.0"
+  }
+}
