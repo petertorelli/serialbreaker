@@ -14,4 +14,4 @@ or
 % main.py <serial port> [x2|x1 x2]
 ```
 
-Where x1 is the fewest number of digits to send, and x2 is the largest number.
+Where x1 is the fewest number of digits to send, and x2 is the largest number, defaulting to x1=1 and x2=64.
