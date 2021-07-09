@@ -10,10 +10,10 @@ main(int argc, char *argv[])
 	pc.baud(115200);
 	pc.sync();
 	printf("ready\r\n");
-    while (1)
-    {
-        int c;
-        c = getchar();
+	while (1)
+	{
+		int c;
+		c = getchar();
 		if (c == '\n')
 		{
 			printf("%s\r\n", command.c_str());
@@ -24,6 +24,6 @@ main(int argc, char *argv[])
 		{
 			command += c;
 		}
-    }
-    return 0;
+	}
+	return 0;
 }

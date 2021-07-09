@@ -8,7 +8,6 @@ const
 	SerialPort = require('serialport'),
 	Readline = require('@serialport/parser-readline'),
 	ini = require('ini');
-//const port = new SerialPort('/dev/tty.usbmodem14414303', {
 const port = new SerialPort(dev, {
 	autoOpen: false,
 	baudRate: 115200,
@@ -17,15 +16,16 @@ const parser = new Readline({ delimiter: '\r\n' });
 port.pipe(parser);
 parser.on('data', data => {
 	try {
-		console.log(data);
+		console.log("RECEIVED:", data);
 		if (data == 'ready') {
+			// When DUT says b'ready\r\n', write 1-64 ASCII digits
 			let i = parseInt(Math.random() * 63) + 1;
 			let string = '';
 			while (i--) {
 				string += parseInt(Math.random() * 9);
 			}
-			//string = 'x';
 			console.log("SENDING:", string);
+			// don't forget the \r\n
 			string += '\r\n';
 			port.write(string);
 		}
@@ -52,7 +52,6 @@ port.open(error => {
 	}
 });
 
-//process.on('unhandledExceptio')
 process.on('SIGINT', () => {
 	console.log('sigint');
 	if (port.isOpen) {
