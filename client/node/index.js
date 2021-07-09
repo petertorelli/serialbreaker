@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-if (process.argv.length !== 3) {
+if (process.argv.length < 3) {
 	console.error('Please specify the serial port');
 	process.exit(-1);
 }
@@ -7,21 +7,36 @@ const dev = process.argv[2];
 const
 	SerialPort = require('serialport'),
 	Readline = require('@serialport/parser-readline'),
-	ini = require('ini');
+	ini = require('ini'),
+	moment = require('moment');
 const port = new SerialPort(dev, {
 	autoOpen: false,
 	baudRate: 115200,
 });
 const parser = new Readline({ delimiter: '\r\n' });
+let rangex1 = 1
+let rangex2 = 64
+if (process.argv.length == 4) {
+	rangex2 = parseInt(process.argv[3])
+}
+if (process.argv.length == 5) {
+	rangex1 = parseInt(process.argv[3])
+	rangex2 = parseInt(process.argv[4])
+}
+if (rangex1 > rangex2) {
+    throw new Error('Start range may not exceed end range');
+}
+
 port.pipe(parser);
 parser.on('data', data => {
 	try {
+		console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
 		console.log("RECEIVED:", data);
 		if (data == 'ready') {
-			// When DUT says b'ready\r\n', write 1-64 ASCII digits
-			let i = parseInt(Math.random() * 63) + 1;
+			// When DUT says b'ready\r\n', write ASCII digits
+			let i = parseInt(Math.random() * (1 + rangex2 - rangex1)) + rangex1;
 			let string = '';
-			while (i--) {
+			while (i-- > 0) {
 				string += parseInt(Math.random() * 9);
 			}
 			console.log("SENDING:", string);
